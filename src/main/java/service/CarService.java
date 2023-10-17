@@ -39,14 +39,14 @@ public class CarService {
         var connection = getConnection();
         String query = INSERT_CAR.getQuery();
 
+        Long id = car.getId();
+        String name = car.getName();
+        Integer speed = car.getSpeed();
+        LocalDate release_date = car.getRelease_date();
+        String engine = car.getEngine();
+        String color = car.getColor();
         try {
             preparedStatement = connection.prepareStatement(query);
-            Long id = car.getId();
-            String name = car.getName();
-            Integer speed = car.getSpeed();
-            LocalDate release_date = car.getRelease_date();
-            String engine = car.getEngine();
-            String color = car.getColor();
 
             preparedStatement.setLong(1, id);
             preparedStatement.setString(2, name);
@@ -57,7 +57,7 @@ public class CarService {
             preparedStatement.execute();
             System.out.println("Car created successfully: " + car);
         } catch (SQLException e) {
-            throw new CredentialsInvalidException(e.getMessage());
+            System.out.println("Car exists with id " + id+". Try another id!");
         } finally {
             closePreparedStatement(preparedStatement);
             closeConnection(connection);
